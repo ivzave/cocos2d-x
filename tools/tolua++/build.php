@@ -12,7 +12,14 @@
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 define('SRC_DIR', __DIR__ . DS);
 define('OUT_DIR', dirname(__DIR__) . '/../scripting/lua/cocos2dx_support/');
-define('TOLUA_BIN', (DS == '\\') ? 'tolua++.exe' : '/usr/local/bin/tolua++');
+if (PHP_OS == 'Linux')
+{
+	define('TOLUA_BIN', '/usr/bin/tolua++5.1');
+}
+else
+{
+	define('TOLUA_BIN', (DS == '\\') ? 'tolua++.exe' : '/usr/local/bin/tolua++');
+}
 
 class Builder
 {
@@ -248,6 +255,15 @@ static int tolua_collect_LUA_STRING (lua_State* tolua_S)
 }
 EOT;
 $replace = '';
+$FIX[$find] = $replace;
+
+$find = <<<EOT
+  va_list args = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+EOT;
+$replace = <<<EOT
+  va_list args;
+  va_copy(args, *((va_list*)  tolua_tousertype(tolua_S,3,0)));
+EOT;
 $FIX[$find] = $replace;
 
 // main

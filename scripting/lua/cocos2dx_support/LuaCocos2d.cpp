@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Sep 25 16:42:45 2012.
+** Generated automatically by tolua++-1.0.93 on Wed Sep 26 15:05:29 2012.
 */
 
 /****************************************************************************
@@ -42299,7 +42299,8 @@ static int tolua_Cocos2d_CCMenu_alignItemsInColumns00(lua_State* tolua_S)
  {
   CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
   unsigned int columns = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  va_list args = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+  va_list args;
+  va_copy(args, *((va_list*)  tolua_tousertype(tolua_S,3,0)));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInColumns'", NULL);
 #endif
@@ -42334,7 +42335,8 @@ static int tolua_Cocos2d_CCMenu_alignItemsInRows00(lua_State* tolua_S)
  {
   CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
   unsigned int rows = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  va_list args = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+  va_list args;
+  va_copy(args, *((va_list*)  tolua_tousertype(tolua_S,3,0)));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInRows'", NULL);
 #endif
