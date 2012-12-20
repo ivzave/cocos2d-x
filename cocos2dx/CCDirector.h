@@ -51,13 +51,13 @@ NS_CC_BEGIN
 typedef enum {
     /// sets a 2D projection (orthogonal projection)
     kCCDirectorProjection2D,
-    
+
     /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
     kCCDirectorProjection3D,
-    
+
     /// it calls "updateProjection" on the projection delegate.
     kCCDirectorProjectionCustom,
-    
+
     /// Default projection is 3D projection
     kCCDirectorProjectionDefault = kCCDirectorProjection3D,
 } ccDirectorProjection;
@@ -77,17 +77,17 @@ class CCAccelerometer;
 /**
 @brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
- 
+
  The CCDirector is also responsible for:
   - initializing the OpenGL context
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
   - setting the projection (default one is 3D)
   - setting the orientation (default one is Portrait)
- 
+
  Since the CCDirector is a singleton, the standard way to use it is by calling:
   _ CCDirector::sharedDirector()->methodName();
- 
+
  The CCDirector also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
   - GL_VERTEX_ARRAY is enabled
@@ -119,7 +119,7 @@ public:
     inline bool isDisplayStats(void) { return m_bDisplayStats; }
     /** Display the FPS on the bottom-left corner */
     inline void setDisplayStats(bool bDisplayStats) { m_bDisplayStats = bDisplayStats; }
-    
+
     /** seconds per frame */
     inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
 
@@ -135,7 +135,7 @@ public:
 
     /** How many frames were called since the director started */
     inline unsigned int getTotalFrames(void) { return m_uTotalFrames; }
-    
+
     /** Sets an OpenGL projection
      @since v0.8.2
      */
@@ -143,8 +143,8 @@ public:
     void setProjection(ccDirectorProjection kProjection);
 
     /** How many frames were called since the director started */
-    
-    
+
+
     /** Whether or not the replaced scene will receive the cleanup message.
      If the new scene is pushed, then the old scene won't receive the "cleanup" message.
      If the new scene replaces the old one, the it will receive the "cleanup" message.
@@ -159,7 +159,7 @@ public:
      */
     CCNode* getNotificationNode();
     void setNotificationNode(CCNode *node);
-    
+
     /** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
      @since v0.99.5
      */
@@ -175,13 +175,13 @@ public:
     /** returns the size of the OpenGL view in pixels.
     */
     CCSize getWinSizeInPixels(void);
-    
+
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
      *  CCEGLView::setDesignResolutionSize()
      */
     CCSize getVisibleSize();
-    
+
     /** returns visible origin of the OpenGL view in points.
      */
     CCPoint getVisibleOrigin();
@@ -196,12 +196,12 @@ public:
      */
     CCPoint convertToUI(const CCPoint& obPoint);
 
-    /// XXX: missing description 
+    /// XXX: missing description
     float getZEye(void);
 
     // Scene Management
 
-    /**Enters the Director's main loop with the given Scene. 
+    /**Enters the Director's main loop with the given Scene.
      * Call it to run only your FIRST scene.
      * Don't call it if there is already a running scene.
      *
@@ -211,7 +211,7 @@ public:
 
     /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
      * The new scene will be executed.
-     * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
+     * Try to avoid big stacks of pushed scenes to reduce memory allocation.
      * ONLY call it if there is a running scene.
      */
     void pushScene(CCScene *pScene);
@@ -221,7 +221,7 @@ public:
      * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
      * ONLY call it if there is a running scene.
      */
-    void popScene(void);
+    CCScene* popScene(void);
 
     /**Pops out all scenes from the queue until the root scene in the queue.
      * This scene will replace the running one.
@@ -330,14 +330,14 @@ protected:
 
     void purgeDirector();
     bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
-    
+
     void setNextScene(void);
-    
+
     void showStats();
     void createStatsLabel();
     void calculateMPF();
 
-    /** calculates delta time since last time it was called */    
+    /** calculates delta time since last time it was called */
     void calculateDeltaTime();
 protected:
     /* The CCEGLView, where everything is rendered */
@@ -348,15 +348,15 @@ protected:
 
     /* landscape mode ? */
     bool m_bLandscape;
-    
+
     bool m_bDisplayStats;
     float m_fAccumDt;
     float m_fFrameRate;
-    
+
     CCLabelTTF *m_pFPSLabel;
     CCLabelTTF *m_pSPFLabel;
     CCLabelTTF *m_pDrawsLabel;
-    
+
     /** Whether or not the Director is paused */
     bool m_bPaused;
 
@@ -364,20 +364,20 @@ protected:
     unsigned int m_uTotalFrames;
     unsigned int m_uFrames;
     float m_fSecondsPerFrame;
-     
+
     /* The running scene */
     CCScene *m_pRunningScene;
-    
+
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */
     CCScene *m_pNextScene;
-    
+
     /* If YES, then "old" scene will receive the cleanup message */
     bool    m_bSendCleanupToScene;
 
     /* scheduled scenes */
     CCArray* m_pobScenesStack;
-    
+
     /* last time the main loop was updated */
     struct cc_timeval *m_pLastUpdate;
 
@@ -386,13 +386,13 @@ protected:
 
     /* whether or not the next delta time will be zero */
     bool m_bNextDeltaTimeZero;
-    
+
     /* projection used */
     ccDirectorProjection m_eProjection;
 
     /* window size in points */
     CCSize    m_obWinSizeInPoints;
-    
+
     /* content scale factor */
     float    m_fContentScaleFactor;
 
@@ -404,24 +404,24 @@ protected:
 
     /* Projection protocol delegate */
     CCDirectorDelegate *m_pProjectionDelegate;
-    
+
     // CCEGLViewProtocol will recreate stats labels to fit visible rect
     friend class CCEGLViewProtocol;
 };
 
-/** 
+/**
  @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
- 
+
  Features and Limitations:
   - Scheduled timers & drawing are synchronizes with the refresh rate of the display
   - Only supports animation intervals of 1/60 1/30 & 1/15
- 
+
  @since v0.8.2
  */
 class CCDisplayLinkDirector : public CCDirector
 {
 public:
-    CCDisplayLinkDirector(void) 
+    CCDisplayLinkDirector(void)
         : m_bInvalid(false)
     {}
 
